@@ -30,5 +30,4 @@ extension BaseTarget {
     var task: Moya.Task {
         return .requestPlain
     }
-
 }
