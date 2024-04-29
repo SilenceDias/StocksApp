@@ -20,6 +20,5 @@ final class LoggerPlugin: PluginType {
             let logFailureMessage = "\n❌ Error: \(error.localizedDescription)"
             print(logFailureMessage)
         }
-        
     }
 }

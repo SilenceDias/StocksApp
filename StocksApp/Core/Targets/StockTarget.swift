@@ -11,6 +11,7 @@ import Moya
 enum StockTarget {
     case stockSymbols
     case companyProfile(symbol: String)
+    case symbolLookup(query: String)
 }
 
 extension StockTarget: BaseTarget {
@@ -20,9 +21,11 @@ extension StockTarget: BaseTarget {
             return "/stock/symbol"
         case .companyProfile:
             return "/stock/profile2"
+         case .symbolLookup:
+            return "/search"
         }
     }
-    
+  
     var task: Moya.Task {
         switch self {
         case .stockSymbols:
@@ -39,6 +42,13 @@ extension StockTarget: BaseTarget {
                     "token": GlobalConstants.apiKey
                 ],
                 encoding: URLEncoding.default)
+        case .symbolLookup(let query):
+            return .requestParameters(parameters: ["q": query], encoding: URLEncoding.queryString)
         }
+    }
+    
+    var headers: [String: String]? {
+        return ["Content-Type": "application/json",
+                "X-Finnhub-Token": GlobalConstants.apiKey]
     }
 }
