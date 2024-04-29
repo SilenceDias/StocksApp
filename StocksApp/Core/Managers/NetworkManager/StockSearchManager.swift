@@ -12,8 +12,8 @@ protocol StockManagerProtocol {
     func perform<T: Decodable>(_ target: StockTarget, completion: @escaping (Result<T, APINetworkError>) -> Void)
 }
 
-final class StockManager: StockManagerProtocol {
-    static let shared = StockManager()
+final class StockSearchManager: StockManagerProtocol {
+    static let shared = StockSearchManager()
     
     private let provider = MoyaProvider<StockTarget>(
         plugins: [

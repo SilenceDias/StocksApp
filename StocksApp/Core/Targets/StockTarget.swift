@@ -2,31 +2,46 @@
 //  StockTarget.swift
 //  StocksApp
 //
-//  Created by Aneli  on 27.04.2024.
+//  Created by Диас Мухамедрахимов on 26.04.2024.
 //
 
 import Foundation
 import Moya
 
-enum StockTarget: BaseTarget {
+enum StockTarget {
+    case stockSymbols
+    case companyProfile(symbol: String)
     case symbolLookup(query: String)
-    
+}
+
+extension StockTarget: BaseTarget {
     var path: String {
         switch self {
-        case .symbolLookup:
+        case .stockSymbols:
+            return "/stock/symbol"
+        case .companyProfile:
+            return "/stock/profile2"
+         case .symbolLookup:
             return "/search"
         }
     }
-    
-    var method: Moya.Method {
-        switch self {
-        case .symbolLookup:
-            return .get
-        }
-    }
-    
+  
     var task: Moya.Task {
         switch self {
+        case .stockSymbols:
+            return .requestParameters(
+                parameters: [
+                    "exchange": "US",
+                    "token": GlobalConstants.apiKey
+                ],
+                encoding: URLEncoding.default)
+        case .companyProfile(let symbol):
+            return .requestParameters(
+                parameters: [
+                    "symbol": symbol,
+                    "token": GlobalConstants.apiKey
+                ],
+                encoding: URLEncoding.default)
         case .symbolLookup(let query):
             return .requestParameters(parameters: ["q": query], encoding: URLEncoding.queryString)
         }
