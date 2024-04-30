@@ -12,7 +12,8 @@ protocol StockManagerProtocol {
     func perform<T: Decodable>(_ target: StockTarget, completion: @escaping (Result<T, APINetworkError>) -> Void)
 }
 
-final class StockSearchManager: StockManagerProtocol {
+final class StockSearchManager {
+    
     static let shared = StockSearchManager()
     
     private let provider = MoyaProvider<StockTarget>(
@@ -22,12 +23,12 @@ final class StockSearchManager: StockManagerProtocol {
         ]
     )
     
-    func perform<T: Decodable>(_ target: StockTarget, completion: @escaping (Result<T, APINetworkError>) -> Void) {
-        provider.request(target) { result in
+    func performSearch(query: String, completion: @escaping (Result<[StockModel], APINetworkError>) -> Void) {
+        provider.request(.symbolLookup(query: query)) { result in
             switch result {
             case .success(let response):
                 do {
-                    let decodedResponse = try response.map(T.self)
+                    let decodedResponse = try response.map([StockModel].self)
                     completion(.success(decodedResponse))
                 } catch {
                     completion(.failure(.decodingError))

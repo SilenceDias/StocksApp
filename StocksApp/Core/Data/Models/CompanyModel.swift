@@ -9,7 +9,7 @@ import Foundation
 
 struct CompanyModel: Decodable {
     let logo: String?
-    
+}
     
 //    "country": "US",
 //      "currency": "USD",
@@ -23,4 +23,4 @@ struct CompanyModel: Decodable {
 //      "weburl": "https://www.apple.com/",
 //      "logo": "https://static.finnhub.io/logo/87cb30d8-80df-11ea-8951-00000000092a.png",
 //      "finnhubIndustry":"Technology"
-}
+//}

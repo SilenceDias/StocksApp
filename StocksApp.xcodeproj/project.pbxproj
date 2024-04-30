@@ -7,14 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C92AD58E2BDD26420063F5D4 /* StockTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92AD58D2BDD26420063F5D4 /* StockTarget.swift */; };
 		C92AD5902BDD28940063F5D4 /* StockSearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92AD58F2BDD28940063F5D4 /* StockSearchManager.swift */; };
 		C92AD5942BDD2B0C0063F5D4 /* APIResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92AD5932BDD2B0C0063F5D4 /* APIResult.swift */; };
 		C92AD5972BDD354A0063F5D4 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92AD5962BDD354A0063F5D4 /* SearchResultsViewController.swift */; };
 		C92AD5992BDD3B730063F5D4 /* StockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92AD5982BDD3B730063F5D4 /* StockData.swift */; };
 		C92AD59C2BDD4D2A0063F5D4 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92AD59B2BDD4D2A0063F5D4 /* SearchViewModel.swift */; };
+		C92AD59F2BE026260063F5D4 /* StockTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92AD59E2BE026260063F5D4 /* StockTarget.swift */; };
+		C94A3CEC2BE03CE900072DCD /* FMPSearchTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94A3CEB2BE03CE900072DCD /* FMPSearchTarget.swift */; };
+		C94A3CEE2BE03F7F00072DCD /* FMPSearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94A3CED2BE03F7F00072DCD /* FMPSearchManager.swift */; };
 		E820671C2BDBEFCB003B1289 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = E820671B2BDBEFCB003B1289 /* Moya */; };
-		E820671E2BDBF692003B1289 /* StockTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E820671D2BDBF692003B1289 /* StockTarget.swift */; };
 		E82067202BDBF81E003B1289 /* StockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E820671F2BDBF81E003B1289 /* StockManager.swift */; };
 		E82067252BDBF950003B1289 /* StockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82067242BDBF950003B1289 /* StockModel.swift */; };
 		E82067292BDBFB35003B1289 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82067282BDBFB35003B1289 /* MainViewModel.swift */; };
@@ -47,13 +48,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C92AD58D2BDD26420063F5D4 /* StockTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockTarget.swift; sourceTree = "<group>"; };
 		C92AD58F2BDD28940063F5D4 /* StockSearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StockSearchManager.swift; path = StocksApp/Core/Managers/NetworkManager/StockSearchManager.swift; sourceTree = SOURCE_ROOT; };
 		C92AD5932BDD2B0C0063F5D4 /* APIResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResult.swift; sourceTree = "<group>"; };
 		C92AD5962BDD354A0063F5D4 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		C92AD5982BDD3B730063F5D4 /* StockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockData.swift; sourceTree = "<group>"; };
 		C92AD59B2BDD4D2A0063F5D4 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
-		E820671D2BDBF692003B1289 /* StockTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockTarget.swift; sourceTree = "<group>"; };
+		C92AD59E2BE026260063F5D4 /* StockTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockTarget.swift; sourceTree = "<group>"; };
+		C94A3CEB2BE03CE900072DCD /* FMPSearchTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMPSearchTarget.swift; sourceTree = "<group>"; };
+		C94A3CED2BE03F7F00072DCD /* FMPSearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMPSearchManager.swift; sourceTree = "<group>"; };
 		E820671F2BDBF81E003B1289 /* StockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockManager.swift; sourceTree = "<group>"; };
 		E82067242BDBF950003B1289 /* StockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockModel.swift; sourceTree = "<group>"; };
 		E82067282BDBFB35003B1289 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -276,10 +278,10 @@
 			isa = PBXGroup;
 			children = (
 				E8AD91B22BDBE6CF00A8FBD6 /* BaseTarget.swift */,
-				E820671D2BDBF692003B1289 /* StockTarget.swift */,
+				C92AD59E2BE026260063F5D4 /* StockTarget.swift */,
 				E82067342BDF0BE1003B1289 /* MainAlphaTarget.swift */,
 				E820673E2BDFF450003B1289 /* FMPCompanyTarget.swift */,
-				C92AD58D2BDD26420063F5D4 /* StockTarget.swift */,
+				C94A3CEB2BE03CE900072DCD /* FMPSearchTarget.swift */,
 			);
 			path = Targets;
 			sourceTree = "<group>";
@@ -290,6 +292,7 @@
 				E820671F2BDBF81E003B1289 /* StockManager.swift */,
 				E82067362BDF0CD5003B1289 /* MainAlphaManager.swift */,
 				E82067402BDFF58E003B1289 /* FMPManager.swift */,
+				C94A3CED2BE03F7F00072DCD /* FMPSearchManager.swift */,
 				C92AD5922BDD2AED0063F5D4 /* APIResult */,
 				C92AD5912BDD2AD20063F5D4 /* NetworkManager */,
 			);
@@ -438,18 +441,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				E82067252BDBF950003B1289 /* StockModel.swift in Sources */,
-				E820671E2BDBF692003B1289 /* StockTarget.swift in Sources */,
 				E820672C2BDBFB5B003B1289 /* StocksDataModel.swift in Sources */,
-				C92AD58E2BDD26420063F5D4 /* StockTarget.swift in Sources */,
 				E8AD91BD2BDBE88300A8FBD6 /* SearchViewController.swift in Sources */,
 				E8AD91B32BDBE6CF00A8FBD6 /* BaseTarget.swift in Sources */,
 				E82067392BDF0D24003B1289 /* TopLosersModel.swift in Sources */,
+				C94A3CEE2BE03F7F00072DCD /* FMPSearchManager.swift in Sources */,
 				E8AD91832BDAB6FB00A8FBD6 /* AppDelegate.swift in Sources */,
 				E82067352BDF0BE1003B1289 /* MainAlphaTarget.swift in Sources */,
 				E8AD91B12BDBE6B700A8FBD6 /* LoggerPlugin.swift in Sources */,
 				E82067372BDF0CD5003B1289 /* MainAlphaManager.swift in Sources */,
 				E82067202BDBF81E003B1289 /* StockManager.swift in Sources */,
 				E82067412BDFF58E003B1289 /* FMPManager.swift in Sources */,
+				C92AD59F2BE026260063F5D4 /* StockTarget.swift in Sources */,
 				E82067332BDC04E5003B1289 /* CompanyModel.swift in Sources */,
 				E82067292BDBFB35003B1289 /* MainViewModel.swift in Sources */,
 				E820673D2BDFF3D1003B1289 /* CompanyFMPModel.swift in Sources */,
@@ -468,6 +471,7 @@
 				E8AD91BF2BDBE89500A8FBD6 /* FavoritesViewController.swift in Sources */,
 				E82067312BDBFF8A003B1289 /* StocksTableViewCell.swift in Sources */,
 				E8AD91BB2BDBE86D00A8FBD6 /* MainViewController.swift in Sources */,
+				C94A3CEC2BE03CE900072DCD /* FMPSearchTarget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
