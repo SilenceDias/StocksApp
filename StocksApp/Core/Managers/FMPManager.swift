@@ -33,4 +33,20 @@ final class FMPManager {
             }
         }
     }
+    
+    func getHistoricalPrice(symbol: String, timeInterval: String, from: String, to: String, completion: @escaping ([HistoricalChangeModel]) -> ()){
+        provider.request(.getHistoricalPrice(symbol: symbol, timeInterval: timeInterval, from: from, to: to)) { result in
+            switch result {
+            case .success(let response):
+                guard let json = try? JSONSerialization.jsonObject(with: response.data) else { return }
+                print("SUCCESS: \(json)")
+                guard let stocks = try? response.map([HistoricalChangeModel].self) else {
+                    break
+                }
+                completion(stocks)
+            case .failure:
+                break
+            }
+        }
+    }
 }

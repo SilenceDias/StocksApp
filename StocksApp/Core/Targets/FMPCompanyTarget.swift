@@ -10,6 +10,7 @@ import Moya
 
 enum FMPCompanyTarget {
     case getCompanyProfile(symbol: String)
+    case getHistoricalPrice(symbol: String, timeInterval: String, from: String, to: String)
 }
 
 extension FMPCompanyTarget: BaseTarget {
@@ -21,14 +22,27 @@ extension FMPCompanyTarget: BaseTarget {
         switch self {
         case .getCompanyProfile(let symbol):
             return "/profile/\(symbol)"
+        case .getHistoricalPrice(let symbol, let timeInterval, let from, let to):
+            return "/historical-chart/\(timeInterval)/\(symbol)"
         }
     }
     
     var task: Moya.Task {
-        return .requestParameters(
-            parameters: [
-                "apikey": GlobalConstants.apiKeyFMP
-            ],
-            encoding: URLEncoding.default)
+        switch self {
+        case .getCompanyProfile:
+            return .requestParameters(
+                parameters: [
+                    "apikey": GlobalConstants.apiKeyFMP
+                ],
+                encoding: URLEncoding.default)
+        case .getHistoricalPrice(let symbol, let timeInterval, let from, let to):
+            return .requestParameters(
+                parameters: [
+                    "from": from,
+                    "to": to,
+                    "apikey": GlobalConstants.apiKeyFMP
+                ],
+                encoding: URLEncoding.default)
+        }
     }
 }

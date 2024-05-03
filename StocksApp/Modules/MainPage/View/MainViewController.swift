@@ -89,4 +89,15 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configure(data: data)
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = StocksDetailsViewController()
+        guard let data = viewModel?.getCellViewModel(at: indexPath) else {
+            return
+        }
+        vc.symbol = data.symbol
+        vc.price = data.price
+        vc.change = data.priceChange + "(\(data.changePercentage))"
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }

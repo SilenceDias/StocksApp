@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+struct HistoricalChangeModel: Decodable {
+    let date: String
+    let open: Double
+    let low: Double
+    let high: Double
+    let close: Double
+}

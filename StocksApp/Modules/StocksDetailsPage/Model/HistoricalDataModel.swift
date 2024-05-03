@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct HistoricalDataModel {
+    var prices: Double
+    var data: String
+}
