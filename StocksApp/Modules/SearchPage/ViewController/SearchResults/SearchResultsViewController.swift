@@ -8,13 +8,17 @@
 import UIKit
 
 class SearchResultsViewController: UIViewController {
-    private var searchResults: [StocksGroup] = []
+    private var searchResults: [StocksDataModel] = []
     
     private lazy var tableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .plain)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.isHidden = true
+        tableView.estimatedRowHeight = 70
+        tableView.rowHeight = 64
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
         tableView.register(StocksTableViewCell.self, forCellReuseIdentifier: "StocksTableViewCell")
         return tableView
     }()
@@ -22,12 +26,15 @@ class SearchResultsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
+        view.backgroundColor = .white
+        
         tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(8)
+            make.left.right.bottom.equalToSuperview()
         }
     }
     
-    func update(with stocks: [StocksGroup]) {
+    func update(with stocks: [StocksDataModel]) {
         self.searchResults = stocks
         tableView.reloadData()
         tableView.isHidden = stocks.isEmpty
@@ -42,9 +49,16 @@ extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "StocksTableViewCell", for: indexPath) as! StocksTableViewCell
         let stockGroup = searchResults[indexPath.row]
-        if let firstStock = stockGroup.stocks.first {
-            cell.configure(data: firstStock)
-        }
+        cell.configure(data: stockGroup)
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 44
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 88
+    }
 }
+

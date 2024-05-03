@@ -34,7 +34,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             forCellReuseIdentifier: "StocksTableViewCell"
         )
         tableView.register(SectionHeader.self, forHeaderFooterViewReuseIdentifier: "header")
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = .black
         return tableView
     }()
     
@@ -47,10 +47,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     private func setupViews(){
         view.backgroundColor = .white
-        view.addSubview(tableView)
-        
         navigationItem.searchController = searchController
         definesPresentationContext = true
+        view.addSubview(tableView)
     }
     
     private func setupViewModel(){
@@ -60,21 +59,24 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
 
 extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let query = searchController.searchBar.text, !query.isEmpty else {
+        guard
+            let resultsViewController = searchController.searchResultsController as?
+                SearchResultsViewController,
+            let text = searchController.searchBar.text,
+            !text.trimmingCharacters(in: .whitespaces).isEmpty
+        else {
             return
         }
-        
-        viewModel?.search(query: query) { [weak self] in
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-            }
-        }
+        viewModel?.search(query: text, completion: { stocks in
+            resultsViewController.update(with: stocks)
+        })
     }
 }
 
+
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.getNumberInSection(section: section) ?? 3
+        return (viewModel?.getNumberOfItems())!
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

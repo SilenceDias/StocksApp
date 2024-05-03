@@ -18,12 +18,12 @@ final class FMPSearchManager {
         ]
     )
     
-    func searchCompanies(query: String, completion: @escaping(Result<[CompanyFMPModel], Error>) -> Void) {
+    func searchCompanies(query: String, completion: @escaping(Result<[Stock], Error>) -> Void) {
         provider.request(.search(query: query, limit: 15, exchange: nil)) { result in
             switch result {
             case .success(let response):
                 do {
-                    let companies = try response.map([CompanyFMPModel].self)
+                    let companies = try response.map([Stock].self)
                     completion(.success(companies))
                 } catch {
                     completion(.failure(error))

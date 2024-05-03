@@ -13,5 +13,5 @@ enum GlobalConstants {
     static let baseAlphaURL = "https://www.alphavantage.co/query"
     static let baseFMPURL = "https://financialmodelingprep.com/api/v3"
     static let apiKeyAlpha = "2D2G3LZGUKINYO4D"
-    static let apiKeyFMP = "4Mn3Ezyy1QrKXs6GOYeH67uKVOGoWOTz"
+    static let apiKeyFMP = "xISJ5pFrsXQ9NlONUBwu457lLW0nQu1P"
 }

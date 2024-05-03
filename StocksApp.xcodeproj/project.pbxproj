@@ -15,6 +15,7 @@
 		C92AD59F2BE026260063F5D4 /* StockTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92AD59E2BE026260063F5D4 /* StockTarget.swift */; };
 		C94A3CEC2BE03CE900072DCD /* FMPSearchTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94A3CEB2BE03CE900072DCD /* FMPSearchTarget.swift */; };
 		C94A3CEE2BE03F7F00072DCD /* FMPSearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94A3CED2BE03F7F00072DCD /* FMPSearchManager.swift */; };
+		C94A3CF42BE416B500072DCD /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = C94A3CF32BE416B500072DCD /* SkeletonView */; };
 		E820671C2BDBEFCB003B1289 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = E820671B2BDBEFCB003B1289 /* Moya */; };
 		E82067202BDBF81E003B1289 /* StockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E820671F2BDBF81E003B1289 /* StockManager.swift */; };
 		E82067252BDBF950003B1289 /* StockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82067242BDBF950003B1289 /* StockModel.swift */; };
@@ -95,6 +96,7 @@
 				E8AD91A82BDBE65800A8FBD6 /* SnapKit in Frameworks */,
 				E820671C2BDBEFCB003B1289 /* Moya in Frameworks */,
 				E8AD91AA2BDBE65800A8FBD6 /* SnapKit-Dynamic in Frameworks */,
+				C94A3CF42BE416B500072DCD /* SkeletonView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +158,7 @@
 				E82067322BDC04E5003B1289 /* CompanyModel.swift */,
 				E82067382BDF0D24003B1289 /* TopLosersModel.swift */,
 				E820673C2BDFF3D1003B1289 /* CompanyFMPModel.swift */,
+				C92AD5982BDD3B730063F5D4 /* StockData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -304,7 +307,6 @@
 			children = (
 				E82067212BDBF91A003B1289 /* Models */,
 				E8AD91B42BDBE6FF00A8FBD6 /* GlobalData */,
-				C92AD5982BDD3B730063F5D4 /* StockData.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -380,6 +382,7 @@
 				E8AD91A92BDBE65800A8FBD6 /* SnapKit-Dynamic */,
 				E8AD91AC2BDBE67E00A8FBD6 /* Kingfisher */,
 				E820671B2BDBEFCB003B1289 /* Moya */,
+				C94A3CF32BE416B500072DCD /* SkeletonView */,
 			);
 			productName = StocksApp;
 			productReference = E8AD917F2BDAB6FB00A8FBD6 /* StocksApp.app */;
@@ -413,6 +416,7 @@
 				E8AD91A52BDBE64B00A8FBD6 /* XCRemoteSwiftPackageReference "Moya" */,
 				E8AD91A62BDBE65800A8FBD6 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				E8AD91AB2BDBE67E00A8FBD6 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				C94A3CF22BE416B500072DCD /* XCRemoteSwiftPackageReference "SkeletonView" */,
 			);
 			productRefGroup = E8AD91802BDAB6FB00A8FBD6 /* Products */;
 			projectDirPath = "";
@@ -688,6 +692,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C94A3CF22BE416B500072DCD /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.31.0;
+			};
+		};
 		E8AD91A52BDBE64B00A8FBD6 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya.git";
@@ -715,6 +727,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C94A3CF32BE416B500072DCD /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C94A3CF22BE416B500072DCD /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
+		};
 		E820671B2BDBEFCB003B1289 /* Moya */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E8AD91A52BDBE64B00A8FBD6 /* XCRemoteSwiftPackageReference "Moya" */;
