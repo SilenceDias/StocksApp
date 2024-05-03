@@ -147,10 +147,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = recommendedTableView.dequeueReusableCell(withIdentifier: "StocksTableViewCell", for: indexPath) as! StocksTableViewCell
         let data = viewModel?.getCellViewModel(at: indexPath)
         cell.configure(data: data)
-        
+//        
 //        let isFavoriteMovie = !self.favoriteMovies.filter({ ($0.value(forKeyPath: "id") as? Int) == movie.id}).isEmpty
 //        cell.toggleFavoriteImage(with: isFavoriteMovie)
-//        
+        
 //        cell.didTapFavorite = { [weak self] in
 //            guard let self else { return }
 //            let isFavoriteMovie = !self.favoriteMovies.filter({ ($0.value(forKeyPath: "id") as? Int) == movie.id}).isEmpty
