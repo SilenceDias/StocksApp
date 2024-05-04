@@ -21,7 +21,7 @@ extension MainAlphaTarget: BaseTarget {
         return .requestParameters(
             parameters: [
                 "function": "TOP_GAINERS_LOSERS",
-                "apikey": GlobalConstants.apiKey
+                "apikey": GlobalConstants.apiKeyAlpha
             ],
             encoding: URLEncoding.default)
     }

@@ -30,6 +30,16 @@
 		E820673D2BDFF3D1003B1289 /* CompanyFMPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E820673C2BDFF3D1003B1289 /* CompanyFMPModel.swift */; };
 		E820673F2BDFF450003B1289 /* FMPCompanyTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E820673E2BDFF450003B1289 /* FMPCompanyTarget.swift */; };
 		E82067412BDFF58E003B1289 /* FMPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82067402BDFF58E003B1289 /* FMPManager.swift */; };
+		E82067442BE02C11003B1289 /* StocksDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82067432BE02C11003B1289 /* StocksDetailsViewController.swift */; };
+		E82067472BE02C4A003B1289 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = E82067462BE02C4A003B1289 /* DGCharts */; };
+		E82067492BE02C4A003B1289 /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = E82067482BE02C4A003B1289 /* DGChartsDynamic */; };
+		E820674C2BE02D5A003B1289 /* ChartDatasetFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E820674B2BE02D5A003B1289 /* ChartDatasetFactory.swift */; };
+		E820674F2BE02DA5003B1289 /* DataColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E820674E2BE02DA5003B1289 /* DataColor.swift */; };
+		E82067522BE0314B003B1289 /* CircleMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82067512BE0314B003B1289 /* CircleMarker.swift */; };
+		E82067562BE3D004003B1289 /* HistoricalChangeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82067552BE3D004003B1289 /* HistoricalChangeModel.swift */; };
+		E82067592BE438C8003B1289 /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82067582BE438C8003B1289 /* DetailsViewModel.swift */; };
+		E820675B2BE50421003B1289 /* Bubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = E820675A2BE50421003B1289 /* Bubble.swift */; };
+		E820675E2BE50E87003B1289 /* HistoricalDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E820675D2BE50E87003B1289 /* HistoricalDataModel.swift */; };
 		E8AD91832BDAB6FB00A8FBD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD91822BDAB6FB00A8FBD6 /* AppDelegate.swift */; };
 		E8AD91852BDAB6FB00A8FBD6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD91842BDAB6FB00A8FBD6 /* SceneDelegate.swift */; };
 		E8AD918D2BDAB6FB00A8FBD6 /* StocksApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E8AD918B2BDAB6FB00A8FBD6 /* StocksApp.xcdatamodeld */; };
@@ -70,6 +80,14 @@
 		E820673C2BDFF3D1003B1289 /* CompanyFMPModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyFMPModel.swift; sourceTree = "<group>"; };
 		E820673E2BDFF450003B1289 /* FMPCompanyTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMPCompanyTarget.swift; sourceTree = "<group>"; };
 		E82067402BDFF58E003B1289 /* FMPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMPManager.swift; sourceTree = "<group>"; };
+		E82067432BE02C11003B1289 /* StocksDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksDetailsViewController.swift; sourceTree = "<group>"; };
+		E820674B2BE02D5A003B1289 /* ChartDatasetFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDatasetFactory.swift; sourceTree = "<group>"; };
+		E820674E2BE02DA5003B1289 /* DataColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataColor.swift; sourceTree = "<group>"; };
+		E82067512BE0314B003B1289 /* CircleMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleMarker.swift; sourceTree = "<group>"; };
+		E82067552BE3D004003B1289 /* HistoricalChangeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoricalChangeModel.swift; sourceTree = "<group>"; };
+		E82067582BE438C8003B1289 /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
+		E820675A2BE50421003B1289 /* Bubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bubble.swift; sourceTree = "<group>"; };
+		E820675D2BE50E87003B1289 /* HistoricalDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoricalDataModel.swift; sourceTree = "<group>"; };
 		E8AD917F2BDAB6FB00A8FBD6 /* StocksApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StocksApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8AD91822BDAB6FB00A8FBD6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8AD91842BDAB6FB00A8FBD6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,7 +112,9 @@
 			files = (
 				E8AD91AD2BDBE67E00A8FBD6 /* Kingfisher in Frameworks */,
 				E8AD91A82BDBE65800A8FBD6 /* SnapKit in Frameworks */,
+				E82067472BE02C4A003B1289 /* DGCharts in Frameworks */,
 				E820671C2BDBEFCB003B1289 /* Moya in Frameworks */,
+				E82067492BE02C4A003B1289 /* DGChartsDynamic in Frameworks */,
 				E8AD91AA2BDBE65800A8FBD6 /* SnapKit-Dynamic in Frameworks */,
 				C94A3CF42BE416B500072DCD /* SkeletonView in Frameworks */,
 			);
@@ -159,6 +179,7 @@
 				E82067382BDF0D24003B1289 /* TopLosersModel.swift */,
 				E820673C2BDFF3D1003B1289 /* CompanyFMPModel.swift */,
 				C92AD5982BDD3B730063F5D4 /* StockData.swift */,
+				E82067552BE3D004003B1289 /* HistoricalChangeModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -195,6 +216,55 @@
 				E820673A2BDF13E1003B1289 /* SectionHeader.swift */,
 			);
 			path = Subview;
+			sourceTree = "<group>";
+		};
+		E82067422BE02BDF003B1289 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E82067432BE02C11003B1289 /* StocksDetailsViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E820674A2BE02D48003B1289 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				E820674B2BE02D5A003B1289 /* ChartDatasetFactory.swift */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
+		E820674D2BE02D9C003B1289 /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				E820674E2BE02DA5003B1289 /* DataColor.swift */,
+			);
+			path = Enum;
+			sourceTree = "<group>";
+		};
+		E82067502BE0313A003B1289 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				E82067512BE0314B003B1289 /* CircleMarker.swift */,
+				E820675A2BE50421003B1289 /* Bubble.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		E82067572BE438B7003B1289 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E82067582BE438C8003B1289 /* DetailsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E820675C2BE50E77003B1289 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E820675D2BE50E87003B1289 /* HistoricalDataModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		E8AD91762BDAB6FB00A8FBD6 = {
@@ -341,6 +411,12 @@
 		E8AD91A42BDBE50700A8FBD6 /* StocksDetailsPage */ = {
 			isa = PBXGroup;
 			children = (
+				E820675C2BE50E77003B1289 /* Model */,
+				E82067572BE438B7003B1289 /* ViewModel */,
+				E82067502BE0313A003B1289 /* Subviews */,
+				E820674D2BE02D9C003B1289 /* Enum */,
+				E820674A2BE02D48003B1289 /* Factory */,
+				E82067422BE02BDF003B1289 /* View */,
 			);
 			path = StocksDetailsPage;
 			sourceTree = "<group>";
@@ -383,6 +459,8 @@
 				E8AD91AC2BDBE67E00A8FBD6 /* Kingfisher */,
 				E820671B2BDBEFCB003B1289 /* Moya */,
 				C94A3CF32BE416B500072DCD /* SkeletonView */,
+				E82067462BE02C4A003B1289 /* DGCharts */,
+				E82067482BE02C4A003B1289 /* DGChartsDynamic */,
 			);
 			productName = StocksApp;
 			productReference = E8AD917F2BDAB6FB00A8FBD6 /* StocksApp.app */;
@@ -417,6 +495,7 @@
 				E8AD91A62BDBE65800A8FBD6 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				E8AD91AB2BDBE67E00A8FBD6 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				C94A3CF22BE416B500072DCD /* XCRemoteSwiftPackageReference "SkeletonView" */,
+				E82067452BE02C4A003B1289 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = E8AD91802BDAB6FB00A8FBD6 /* Products */;
 			projectDirPath = "";
@@ -445,14 +524,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				E82067252BDBF950003B1289 /* StockModel.swift in Sources */,
+				E820675B2BE50421003B1289 /* Bubble.swift in Sources */,
+				E82067592BE438C8003B1289 /* DetailsViewModel.swift in Sources */,
+				E820671E2BDBF692003B1289 /* StockTarget.swift in Sources */,
 				E820672C2BDBFB5B003B1289 /* StocksDataModel.swift in Sources */,
 				E8AD91BD2BDBE88300A8FBD6 /* SearchViewController.swift in Sources */,
 				E8AD91B32BDBE6CF00A8FBD6 /* BaseTarget.swift in Sources */,
 				E82067392BDF0D24003B1289 /* TopLosersModel.swift in Sources */,
 				C94A3CEE2BE03F7F00072DCD /* FMPSearchManager.swift in Sources */,
 				E8AD91832BDAB6FB00A8FBD6 /* AppDelegate.swift in Sources */,
+				E82067442BE02C11003B1289 /* StocksDetailsViewController.swift in Sources */,
 				E82067352BDF0BE1003B1289 /* MainAlphaTarget.swift in Sources */,
 				E8AD91B12BDBE6B700A8FBD6 /* LoggerPlugin.swift in Sources */,
+				E820674F2BE02DA5003B1289 /* DataColor.swift in Sources */,
 				E82067372BDF0CD5003B1289 /* MainAlphaManager.swift in Sources */,
 				E82067202BDBF81E003B1289 /* StockManager.swift in Sources */,
 				E82067412BDFF58E003B1289 /* FMPManager.swift in Sources */,
@@ -465,10 +549,14 @@
 				C92AD5902BDD28940063F5D4 /* StockSearchManager.swift in Sources */,
 				E8AD91B92BDBE7B600A8FBD6 /* TabBarViewController.swift in Sources */,
 				C92AD5972BDD354A0063F5D4 /* SearchResultsViewController.swift in Sources */,
+				E82067522BE0314B003B1289 /* CircleMarker.swift in Sources */,
 				C92AD5992BDD3B730063F5D4 /* StockData.swift in Sources */,
 				E8AD918D2BDAB6FB00A8FBD6 /* StocksApp.xcdatamodeld in Sources */,
+				E820674C2BE02D5A003B1289 /* ChartDatasetFactory.swift in Sources */,
 				E8AD91AF2BDBE69800A8FBD6 /* NetworkLoggerPluginConfig.swift in Sources */,
 				E820673F2BDFF450003B1289 /* FMPCompanyTarget.swift in Sources */,
+				E82067562BE3D004003B1289 /* HistoricalChangeModel.swift in Sources */,
+				E820675E2BE50E87003B1289 /* HistoricalDataModel.swift in Sources */,
 				E8AD91B62BDBE71000A8FBD6 /* GlobalConstants.swift in Sources */,
 				E8AD91852BDAB6FB00A8FBD6 /* SceneDelegate.swift in Sources */,
 				E820673B2BDF13E1003B1289 /* SectionHeader.swift in Sources */,
@@ -692,6 +780,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E82067452BE02C4A003B1289 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 		C94A3CF22BE416B500072DCD /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Juanpe/SkeletonView";
@@ -736,6 +832,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E8AD91A52BDBE64B00A8FBD6 /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = Moya;
+		};
+		E82067462BE02C4A003B1289 /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E82067452BE02C4A003B1289 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+		E82067482BE02C4A003B1289 /* DGChartsDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E82067452BE02C4A003B1289 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGChartsDynamic;
 		};
 		E8AD91A72BDBE65800A8FBD6 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
