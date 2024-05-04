@@ -17,7 +17,7 @@ class TabBarViewController: UITabBarController {
     
     private var allViewControllers = [
         UINavigationController(rootViewController: MainViewController()),
-        UINavigationController(rootViewController: StocksDetailsViewController()),
+        UINavigationController(rootViewController: FavoritesViewController()),
         UINavigationController(rootViewController: SearchViewController())
     ]
 
@@ -36,6 +36,7 @@ class TabBarViewController: UITabBarController {
         view.backgroundColor = .white
         tabBar.tintColor = UIColor(red: 6/255.0, green: 125/255.0, blue: 246/255.0, alpha: 1.0)
         tabBar.backgroundColor = .white
+        tabBar.tintColor = .black
         tabBar.unselectedItemTintColor = .lightGray
         setViewControllers(allViewControllers, animated: false)
         

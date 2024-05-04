@@ -6,21 +6,48 @@
 //
 
 import UIKit
+import CoreData
 
 class SearchResultsViewController: UIViewController {
-    private var tableView: UITableView = UITableView()
-    private var searchResults: [Stock] = []
+    private var searchResults: [StocksDataModel] = []
+    private var favoriteStocks: [NSManagedObject] = []
+    var favoritesViewModel: FavoritesViewModel?
+
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.isHidden = true
+        tableView.estimatedRowHeight = 70
+        tableView.rowHeight = 64
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.register(StocksTableViewCell.self, forCellReuseIdentifier: "StocksTableViewCell")
+        return tableView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
         view.addSubview(tableView)
+        view.backgroundColor = .white
+        setupViewModelFavorites()
+        
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(8)
+            make.left.right.bottom.equalToSuperview()
+        }
     }
     
-    func update(with stocks: [Stock]) {
-        searchResults = stocks
+    func update(with stocks: [StocksDataModel]) {
+        self.searchResults = stocks
         tableView.reloadData()
+        tableView.isHidden = stocks.isEmpty
+    }
+    
+    private func setupViewModelFavorites(){
+        favoritesViewModel = FavoritesViewModel()
+        favoritesViewModel?.fetchData()
+        favoriteStocks = favoritesViewModel?.getFavorites() ?? [NSManagedObject]()
     }
 }
 
@@ -30,60 +57,140 @@ extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
-        let stock = searchResults[indexPath.row]
-        cell.textLabel?.text = stock.profile.name
-        cell.detailTextLabel?.text = stock.ticker.displaySymbol
+        let cell = tableView.dequeueReusableCell(withIdentifier: "StocksTableViewCell", for: indexPath) as! StocksTableViewCell
+        let stockGroup = searchResults[indexPath.row]
+        cell.configure(data: stockGroup)
+        
+        let isFavoriteStock = favoriteStocks.contains { 
+            ($0.value(forKeyPath: "symbolId") as? String) == stockGroup.symbolId
+            && ($0.value(forKeyPath: "symbol") as? String) == stockGroup.symbol
+            && ($0.value(forKeyPath: "name") as? String) == stockGroup.name
+            && ($0.value(forKeyPath: "imageUrl") as? String) == stockGroup.imageUrl
+            && ($0.value(forKeyPath: "price") as? String) == stockGroup.price
+            && ($0.value(forKeyPath: "priceChange") as? String) == stockGroup.priceChange
+        }
+
+        cell.toggleFavoriteImage(with: isFavoriteStock)
+        
+        cell.didTapFavorite = { [weak self] in
+            
+            guard let self = self else { return }
+            
+            let isFavoriteStockNow = favoriteStocks.contains {
+                ($0.value(forKeyPath: "symbolId") as? String) == stockGroup.symbolId
+                && ($0.value(forKeyPath: "symbol") as? String) == stockGroup.symbol
+                && ($0.value(forKeyPath: "name") as? String) == stockGroup.name
+                && ($0.value(forKeyPath: "imageUrl") as? String) == stockGroup.imageUrl
+                && ($0.value(forKeyPath: "price") as? String) == stockGroup.price
+                && ($0.value(forKeyPath: "priceChange") as? String) == stockGroup.priceChange
+            }
+            
+            if isFavoriteStockNow {
+                self.favoritesViewModel?.deleteFavoriteStock(with: stockGroup, completion: { [weak self] stocks in
+                    self?.favoriteStocks = stocks
+                })
+            } else {
+                self.favoritesViewModel?.saveFavoriteStock(with: stockGroup, completion: { [weak self] stocks in
+                    self?.favoriteStocks = stocks
+                })
+            }
+            self.tableView.reloadData()
+        }
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 44
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 88
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = StocksDetailsViewController()
+        let data = searchResults[indexPath.row]
+        vc.symbol = data.symbol
+        vc.price = data.price
+        vc.change = data.priceChange + "(\(data.changePercentage))"
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
-
-//import UIKit
-//import SnapKit
-//
-//protocol SearchResultsViewControllerDelegate {
-//    func showResult(_ controller: UIViewController)
-//}
-//
-//class SearchResultsViewController: UIViewController {
-//    
-//    private lazy var tableView: UITableView = {
-//        let tableView = UITableView()
-//        tableView.dataSource = self
-//        tableView.delegate = self
-//        tableView.isHidden = true
-//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-//        return tableView
-//    }()
-//    
-//    var numberOfRows: Int = 0
-//    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        
-//        view.addSubview(tableView)
-//        tableView.snp.makeConstraints { make in
-//            make.edges.equalToSuperview()
+//extension SearchResultsViewController: FavoritesViewControllerDelegate {
+//    func saveFavorites() {
+//        do {
+//            try context.save()
+//                tableView.reloadData()
+//        } catch {
+//            print("Error saving data: \(error)")
 //        }
-//        
-//        numberOfRows = 10
 //    }
 //    
-//    func update(with Stocks: [Stock]) {
+//    func addToFavorites(_ stock: StocksDataModel) {
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+//        let context = appDelegate.persistentContainer.viewContext
+//        
+//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Favorites")
+//        fetchRequest.predicate = NSPredicate(format: "symbolId == %@", stock.symbolId)
+//        
+//        do {
+//            let result = try context.fetch(fetchRequest)
+//            for object in result {
+//                context.delete(object as! NSManagedObject)
+//            }
+//            
+//            guard let entity = NSEntityDescription.entity(
+//                forEntityName: "Favorites",
+//                in: context
+//            ) else { return }
+//            
+//            let favoriteStock = NSManagedObject(entity: entity, insertInto: context)
+//            favoriteStock.setValue(stock.symbol, forKey: "symbol")
+//            favoriteStock.setValue(stock.symbolId, forKey: "symbolId")
+//            favoriteStock.setValue(stock.name, forKey: "name")
+//            favoriteStock.setValue(stock.imageUrl, forKey: "imageUrl")
+//            favoriteStock.setValue(stock.price, forKey: "price")
+//            favoriteStock.setValue(stock.priceChange, forKey: "priceChange")
+//            favoriteStock.setValue(true, forKey: "isFavorite")
+//            
+//            favoriteStocks.append(favoriteStock)
+//            
+//            try context.save()
+//            fetchData()
+//        } catch let error as NSError {
+//            print("Could not save. Error: \(error)")
+//        }    }
+//    
+//    func removeFromFavorites(_ stock: StocksDataModel) {
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+//        let context = appDelegate.persistentContainer.viewContext
+//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Favorites")
+//        fetchRequest.predicate = NSPredicate(format: "symbolId == %@", stock.symbolId)
+//        
+//        do {
+//            let results = try context.fetch(fetchRequest)
+//            if let data = results.first {
+//                context.delete(data)
+//                try context.save()
+//                if let index = favoriteStocks.firstIndex(of: data) {
+//                    favoriteStocks.remove(at: index)
+//                }
+//                tableView.reloadData()
+//            }
+//        } catch let error as NSError {
+//            print("Could not delete. Error: \(error)")
+//        }
 //    }
 //}
-//
-//extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return numberOfRows
-//    }
 //    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-//        return cell
-//    }
-//    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//    func saveFavorites() {
+//        do {
+//            try context.save()
+//                tableView.reloadData()
+//        } catch {
+//            print("Error saving data: \(error)")
+//        }
 //    }
 //}
