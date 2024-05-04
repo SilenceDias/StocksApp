@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import CoreData
 
 class MainViewController: UIViewController {
     
     var viewModel: MainViewModel?
+    
+    private lazy var favoriteStocks:[NSManagedObject] = []
     
     private lazy var recommendedTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -31,7 +34,64 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         setupViewModel()
+        loadFavorites()
     }
+    
+    private func loadFavorites() {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Favorites")
+        
+        do {
+            
+            favoriteStocks = try context.fetch(fetchRequest)
+        } catch  let error as NSError{
+            
+            print("Could not fetch. Error: \(error)")
+        }
+    }
+    
+//    private func saveFavoriteMovie(with movie: Result) {
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//        
+//        guard let entity = NSEntityDescription.entity(
+//            forEntityName: "FavoriteMovies",
+//            in: managedContext
+//        ) else { return }
+//        
+//        let favoriteMovie = NSManagedObject(entity: entity, insertInto: managedContext)
+//        favoriteMovie.setValue(movie.id, forKey: "id")
+//        favoriteMovie.setValue(movie.title, forKey: "title")
+//        favoriteMovie.setValue(movie.posterPath, forKey: "posterPath")
+//        
+//        do {
+//            try managedContext.save()
+//        } catch let error as NSError {
+//            print("Could not save. Error: \(error)")
+//        }
+//    }
+//    
+//    private func deleteFavoriteMovie(with movie: Result) {
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "FavoriteMovies")
+//        let predicate1 = NSPredicate(format: "id == %@", "\(movie.id)")
+//        let predicate2 = NSPredicate(format: "title == %@", movie.title)
+//        let predicate3 = NSPredicate(format: "posterPath == %@", movie.posterPath)
+//        let predicateAll = NSCompoundPredicate(type: .and, subpredicates: [predicate1, predicate2, predicate3])
+//        fetchRequest.predicate = predicateAll
+//        
+//        do {
+//            let results = try managedContext.fetch(fetchRequest)
+//            let data = results.first
+//            if let data {
+//                managedContext.delete(data)
+//            }
+//            try managedContext.save()
+//        } catch let error as NSError {
+//            print("Could not delete. Error: \(error)")
+//        }
+//    }
     
     private func setupViews(){
         view.addSubview(recommendedTableView)
@@ -87,6 +147,24 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = recommendedTableView.dequeueReusableCell(withIdentifier: "StocksTableViewCell", for: indexPath) as! StocksTableViewCell
         let data = viewModel?.getCellViewModel(at: indexPath)
         cell.configure(data: data)
+//        
+//        let isFavoriteMovie = !self.favoriteMovies.filter({ ($0.value(forKeyPath: "id") as? Int) == movie.id}).isEmpty
+//        cell.toggleFavoriteImage(with: isFavoriteMovie)
+        
+//        cell.didTapFavorite = { [weak self] in
+//            guard let self else { return }
+//            let isFavoriteMovie = !self.favoriteMovies.filter({ ($0.value(forKeyPath: "id") as? Int) == movie.id}).isEmpty
+//            cell.toggleFavoriteImage(with: isFavoriteMovie)
+//            
+//            if isFavoriteMovie {
+//                self.deleteFavoriteMovie(with: movie)
+//            } else {
+//                self.saveFavoriteMovie(with: movie)
+//            }
+//            
+//            self.movieTableView.reloadData()
+//        }
+        
         return cell
     }
     

@@ -2,7 +2,7 @@
 //  StockTarget.swift
 //  StocksApp
 //
-//  Created by Диас Мухамедрахимов on 26.04.2024.
+//  Created by Aneli  on 30.04.2024.
 //
 
 import Foundation

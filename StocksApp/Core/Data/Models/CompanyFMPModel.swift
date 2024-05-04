@@ -8,10 +8,16 @@
 import Foundation
 
 struct CompanyFMPModel: Decodable {
-    let symbol: String
-    let price: Double
-    let companyName: String
-    let image: String
+    let symbol: String?
+    let price: Double?
+    let companyName: String?
+    let image: String?
+    let exchange: String?
+    let name: String?
+    let currency: String?
+    let stockExchange: String?
+    let exchangeShortName: String?
+}
     
 //    "symbol": "AAPL",
 //            "price": 178.72,
@@ -49,4 +55,4 @@ struct CompanyFMPModel: Decodable {
 //            "isActivelyTrading": true,
 //            "isAdr": false,
 //            "isFund": false
-}
+//}

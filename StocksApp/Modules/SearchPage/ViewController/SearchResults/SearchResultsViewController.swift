@@ -8,19 +8,36 @@
 import UIKit
 
 class SearchResultsViewController: UIViewController {
-    private var tableView: UITableView = UITableView()
-    private var searchResults: [Stock] = []
+    private var searchResults: [StocksDataModel] = []
+    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.isHidden = true
+        tableView.estimatedRowHeight = 70
+        tableView.rowHeight = 64
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.register(StocksTableViewCell.self, forCellReuseIdentifier: "StocksTableViewCell")
+        return tableView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
         view.addSubview(tableView)
+        view.backgroundColor = .white
+        
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(8)
+            make.left.right.bottom.equalToSuperview()
+        }
     }
     
-    func update(with stocks: [Stock]) {
-        searchResults = stocks
+    func update(with stocks: [StocksDataModel]) {
+        self.searchResults = stocks
         tableView.reloadData()
+        tableView.isHidden = stocks.isEmpty
     }
 }
 
@@ -30,60 +47,18 @@ extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
-        let stock = searchResults[indexPath.row]
-        cell.textLabel?.text = stock.profile.name
-        cell.detailTextLabel?.text = stock.ticker.displaySymbol
+        let cell = tableView.dequeueReusableCell(withIdentifier: "StocksTableViewCell", for: indexPath) as! StocksTableViewCell
+        let stockGroup = searchResults[indexPath.row]
+        cell.configure(data: stockGroup)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 44
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 88
     }
 }
 
-
-//import UIKit
-//import SnapKit
-//
-//protocol SearchResultsViewControllerDelegate {
-//    func showResult(_ controller: UIViewController)
-//}
-//
-//class SearchResultsViewController: UIViewController {
-//    
-//    private lazy var tableView: UITableView = {
-//        let tableView = UITableView()
-//        tableView.dataSource = self
-//        tableView.delegate = self
-//        tableView.isHidden = true
-//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-//        return tableView
-//    }()
-//    
-//    var numberOfRows: Int = 0
-//    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        
-//        view.addSubview(tableView)
-//        tableView.snp.makeConstraints { make in
-//            make.edges.equalToSuperview()
-//        }
-//        
-//        numberOfRows = 10
-//    }
-//    
-//    func update(with Stocks: [Stock]) {
-//    }
-//}
-//
-//extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return numberOfRows
-//    }
-//    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-//        return cell
-//    }
-//    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//    }
-//}
