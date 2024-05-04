@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import CoreData
 
 class SearchResultsViewController: UIViewController {
     private var searchResults: [StocksDataModel] = []
-//    weak var favoritesDelegate: FavoritesViewControllerDelegate?
+    private var favoriteStocks: [NSManagedObject] = []
+    var favoritesViewModel: FavoritesViewModel?
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -28,6 +30,7 @@ class SearchResultsViewController: UIViewController {
         super.viewDidLoad()
         view.addSubview(tableView)
         view.backgroundColor = .white
+        setupViewModelFavorites()
         
         tableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(8)
@@ -40,6 +43,12 @@ class SearchResultsViewController: UIViewController {
         tableView.reloadData()
         tableView.isHidden = stocks.isEmpty
     }
+    
+    private func setupViewModelFavorites(){
+        favoritesViewModel = FavoritesViewModel()
+        favoritesViewModel?.fetchData()
+        favoriteStocks = favoritesViewModel?.getFavorites() ?? [NSManagedObject]()
+    }
 }
 
 extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -51,6 +60,43 @@ extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSourc
         let cell = tableView.dequeueReusableCell(withIdentifier: "StocksTableViewCell", for: indexPath) as! StocksTableViewCell
         let stockGroup = searchResults[indexPath.row]
         cell.configure(data: stockGroup)
+        
+        let isFavoriteStock = favoriteStocks.contains { 
+            ($0.value(forKeyPath: "symbolId") as? String) == stockGroup.symbolId
+            && ($0.value(forKeyPath: "symbol") as? String) == stockGroup.symbol
+            && ($0.value(forKeyPath: "name") as? String) == stockGroup.name
+            && ($0.value(forKeyPath: "imageUrl") as? String) == stockGroup.imageUrl
+            && ($0.value(forKeyPath: "price") as? String) == stockGroup.price
+            && ($0.value(forKeyPath: "priceChange") as? String) == stockGroup.priceChange
+        }
+
+        cell.toggleFavoriteImage(with: isFavoriteStock)
+        
+        cell.didTapFavorite = { [weak self] in
+            
+            guard let self = self else { return }
+            
+            let isFavoriteStockNow = favoriteStocks.contains {
+                ($0.value(forKeyPath: "symbolId") as? String) == stockGroup.symbolId
+                && ($0.value(forKeyPath: "symbol") as? String) == stockGroup.symbol
+                && ($0.value(forKeyPath: "name") as? String) == stockGroup.name
+                && ($0.value(forKeyPath: "imageUrl") as? String) == stockGroup.imageUrl
+                && ($0.value(forKeyPath: "price") as? String) == stockGroup.price
+                && ($0.value(forKeyPath: "priceChange") as? String) == stockGroup.priceChange
+            }
+            
+            if isFavoriteStockNow {
+                self.favoritesViewModel?.deleteFavoriteStock(with: stockGroup, completion: { [weak self] stocks in
+                    self?.favoriteStocks = stocks
+                })
+            } else {
+                self.favoritesViewModel?.saveFavoriteStock(with: stockGroup, completion: { [weak self] stocks in
+                    self?.favoriteStocks = stocks
+                })
+            }
+            self.tableView.reloadData()
+        }
+        
         return cell
     }
     
@@ -63,16 +109,12 @@ extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSourc
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedStock = searchResults[indexPath.row]
-//        if isFavorite(selectedStock) {
-//            favoritesDelegate?.removeFromFavorites(selectedStock)
-//        } else {
-//            favoritesDelegate?.addToFavorites(selectedStock)
-//        }
-    }
-
-    private func isFavorite(_ stock: StocksDataModel) -> Bool {
-        return false
+        let vc = StocksDetailsViewController()
+        let data = searchResults[indexPath.row]
+        vc.symbol = data.symbol
+        vc.price = data.price
+        vc.change = data.priceChange + "(\(data.changePercentage))"
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

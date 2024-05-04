@@ -39,6 +39,8 @@
 		E82067592BE438C8003B1289 /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82067582BE438C8003B1289 /* DetailsViewModel.swift */; };
 		E820675B2BE50421003B1289 /* Bubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = E820675A2BE50421003B1289 /* Bubble.swift */; };
 		E820675E2BE50E87003B1289 /* HistoricalDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E820675D2BE50E87003B1289 /* HistoricalDataModel.swift */; };
+		E82067612BE67C15003B1289 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82067602BE67C15003B1289 /* BaseViewController.swift */; };
+		E82067642BE67D67003B1289 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82067632BE67D67003B1289 /* FavoritesViewModel.swift */; };
 		E8AD91832BDAB6FB00A8FBD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD91822BDAB6FB00A8FBD6 /* AppDelegate.swift */; };
 		E8AD91852BDAB6FB00A8FBD6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD91842BDAB6FB00A8FBD6 /* SceneDelegate.swift */; };
 		E8AD918D2BDAB6FB00A8FBD6 /* StocksApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E8AD918B2BDAB6FB00A8FBD6 /* StocksApp.xcdatamodeld */; };
@@ -86,6 +88,8 @@
 		E82067582BE438C8003B1289 /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
 		E820675A2BE50421003B1289 /* Bubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bubble.swift; sourceTree = "<group>"; };
 		E820675D2BE50E87003B1289 /* HistoricalDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoricalDataModel.swift; sourceTree = "<group>"; };
+		E82067602BE67C15003B1289 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		E82067632BE67D67003B1289 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		E8AD917F2BDAB6FB00A8FBD6 /* StocksApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StocksApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8AD91822BDAB6FB00A8FBD6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8AD91842BDAB6FB00A8FBD6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -257,6 +261,22 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		E820675F2BE67BF9003B1289 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				E82067602BE67C15003B1289 /* BaseViewController.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		E82067622BE67D53003B1289 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E82067632BE67D67003B1289 /* FavoritesViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		E8AD91762BDAB6FB00A8FBD6 = {
 			isa = PBXGroup;
 			children = (
@@ -314,6 +334,7 @@
 		E8AD919B2BDBE44900A8FBD6 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E820675F2BE67BF9003B1289 /* Common */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -383,6 +404,7 @@
 		E8AD91A22BDBE4EF00A8FBD6 /* FavoritesPage */ = {
 			isa = PBXGroup;
 			children = (
+				E82067622BE67D53003B1289 /* ViewModel */,
 				E8AD91BE2BDBE89500A8FBD6 /* FavoritesViewController.swift */,
 			);
 			path = FavoritesPage;
@@ -517,6 +539,7 @@
 				E82067592BE438C8003B1289 /* DetailsViewModel.swift in Sources */,
 				E820672C2BDBFB5B003B1289 /* StocksDataModel.swift in Sources */,
 				E8AD91BD2BDBE88300A8FBD6 /* SearchViewController.swift in Sources */,
+				E82067612BE67C15003B1289 /* BaseViewController.swift in Sources */,
 				E8AD91B32BDBE6CF00A8FBD6 /* BaseTarget.swift in Sources */,
 				E82067392BDF0D24003B1289 /* TopLosersModel.swift in Sources */,
 				C94A3CEE2BE03F7F00072DCD /* FMPSearchManager.swift in Sources */,
@@ -526,6 +549,7 @@
 				E8AD91B12BDBE6B700A8FBD6 /* LoggerPlugin.swift in Sources */,
 				E820674F2BE02DA5003B1289 /* DataColor.swift in Sources */,
 				E82067372BDF0CD5003B1289 /* MainAlphaManager.swift in Sources */,
+				E82067642BE67D67003B1289 /* FavoritesViewModel.swift in Sources */,
 				E82067202BDBF81E003B1289 /* StockManager.swift in Sources */,
 				E82067412BDFF58E003B1289 /* FMPManager.swift in Sources */,
 				C92AD59F2BE026260063F5D4 /* StockTarget.swift in Sources */,

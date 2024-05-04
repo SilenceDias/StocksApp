@@ -12,6 +12,7 @@ import SnapKit
 class MainViewController: UIViewController {
     
     var viewModel: MainViewModel?
+    var favoritesViewModel: FavoritesViewModel?
     private var favoriteStocks: [NSManagedObject] = []
     
     private lazy var recommendedTableView: UITableView = {
@@ -37,68 +38,18 @@ class MainViewController: UIViewController {
         loadFavorites()
     }
     
-    func loadFavorites() {
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Favorites")
-        
-        do {
-            favoriteStocks = try context.fetch(fetchRequest)
-        } catch let error as NSError {
-            print("Could not fetch. Error: \(error)")
-        }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tabBarController?.tabBar.isHidden = false
+        setupViewModelFavorites()
     }
-
-    private func saveFavoriteStock(with stock: StocksDataModel) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let context = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Favorites")
-        fetchRequest.predicate = NSPredicate(format: "symbolId == %@", stock.symbolId)
-        
-        do {
-            let result = try context.fetch(fetchRequest)
-            if result.isEmpty {
-                guard let entity = NSEntityDescription.entity(
-                    forEntityName: "Favorites",
-                    in: context
-                ) else { return }
-                
-                let favoriteStock = NSManagedObject(entity: entity, insertInto: context)
-                favoriteStock.setValue(stock.symbol, forKey: "symbol")
-                favoriteStock.setValue(stock.symbolId, forKey: "symbolId")
-                favoriteStock.setValue(stock.name, forKey: "name")
-                favoriteStock.setValue(stock.imageUrl, forKey: "imageUrl")
-                favoriteStock.setValue(stock.price, forKey: "price")
-                favoriteStock.setValue(stock.priceChange, forKey: "priceChange")
-                
-                try context.save()
-                favoriteStocks.append(favoriteStock)
-            }
-        } catch let error as NSError {
-            print("Could not save. Error: \(error)")
-        }
+    
+    private func setupViewModelFavorites(){
+        favoritesViewModel = FavoritesViewModel()
+        favoritesViewModel?.fetchData()
+        favoriteStocks = favoritesViewModel?.getFavorites() ?? [NSManagedObject]()
+        recommendedTableView.reloadData()
     }
-
-    private func deleteFavoriteStock(with stock: StocksDataModel) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let context = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Favorites")
-        fetchRequest.predicate = NSPredicate(format: "symbolId == %@", stock.symbolId)
-        
-        do {
-            let results = try context.fetch(fetchRequest)
-            if let data = results.first {
-                context.delete(data)
-                try context.save()
-                if let index = favoriteStocks.firstIndex(of: data) {
-                    favoriteStocks.remove(at: index)
-                }
-            }
-        } catch let error as NSError {
-            print("Could not delete. Error: \(error)")
-        }
-    }
-
     
     private func setupViews() {
         view.addSubview(recommendedTableView)
@@ -164,9 +115,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             guard let self = self else { return }
             
             if isFavoriteStock {
-                self.deleteFavoriteStock(with: data)
+                self.favoritesViewModel?.deleteFavoriteStock(with: data, completion: { [weak self] stocks in
+                    self?.favoriteStocks = stocks
+                })
             } else {
-                self.saveFavoriteStock(with: data)
+                self.favoritesViewModel?.saveFavoriteStock(with: data, completion: { [weak self] stocks in
+                    self?.favoriteStocks = stocks
+                })
             }
             self.recommendedTableView.reloadData()
         }

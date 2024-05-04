@@ -64,6 +64,11 @@ class StocksTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        favoriteIconImageView.image = nil
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
@@ -90,7 +95,10 @@ class StocksTableViewCell: UITableViewCell {
         favoriteIconImageView.image = isFavorite
                                       ? UIImage(named: "full_star")
                                       : UIImage(named: "empty_star")
-
+    }
+    
+    func setFavorite(){
+        favoriteIconImageView.image = UIImage(named: "full_star")
     }
     
     private func setupViews(){
