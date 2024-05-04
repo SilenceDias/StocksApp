@@ -37,5 +37,4 @@ class SectionHeader: UITableViewHeaderFooterView {
             make.centerX.equalToSuperview()
         }
     }
-
 }
