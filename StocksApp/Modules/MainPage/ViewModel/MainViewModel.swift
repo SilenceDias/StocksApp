@@ -57,16 +57,12 @@ class MainViewModel {
         }
         
         dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
-            print("1231")
             for i in 0..<(self?.stocks.count ?? 1) {
                 for j in 0..<(self?.stocks[i].stocks.count ?? 1){
                     FMPManager.shared.getCompanyProfile(symbol: self?.stocks[i].stocks[j].symbol ?? "") { result in
                         self?.stocks[i].stocks[j].imageUrl = result.first?.image ?? ""
                         self?.stocks[i].stocks[j].name = result.first?.companyName ?? ""
                     }
-//                    StockManager.shared.getDetails(symbol: self?.stocks[i].stocks[j].symbol ?? "") { result in
-//                        self?.stocks[i].stocks[j].imageUrl = result.logo ?? ""
-//                    }
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2){

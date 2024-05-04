@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import SkeletonView
 
-class SearchViewController: UIViewController, UISearchBarDelegate {
+class SearchViewController: BaseViewController, UISearchBarDelegate {
     
     var viewModel: SearchViewModel?
     
@@ -42,12 +43,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         )
         tableView.register(SectionHeader.self, forHeaderFooterViewReuseIdentifier: "header")
         tableView.backgroundColor = .black
+        tableView.isSkeletonable = true
         return tableView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Search"
+        navigationItem.title = "Search"
         setupViews()
         setupViewModel()
     }
@@ -80,8 +82,10 @@ extension SearchViewController: UISearchResultsUpdating {
         else {
             return
         }
-        viewModel?.search(query: text, completion: { stocks in
+        showLoader()
+        viewModel?.search(query: text, completion: { [weak self] stocks in
             resultsViewController.update(with: stocks)
+            self?.hideLoader()
         })
     }
 }
@@ -102,4 +106,15 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 88
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = StocksDetailsViewController()
+        let data = viewModel?.getCellViewModel(at: indexPath)
+        vc.symbol = data?.symbol ?? ""
+        vc.price = data?.symbol ?? ""
+        vc.change = (data?.priceChange ?? "") + "(\(String(describing: data?.changePercentage)))"
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
+
+

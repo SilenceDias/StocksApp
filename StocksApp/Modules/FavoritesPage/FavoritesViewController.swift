@@ -31,7 +31,7 @@ class FavoritesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Favorite"
+        navigationItem.title = "Favorites"
         view.backgroundColor = .white
         setupViews()
     }
@@ -59,7 +59,7 @@ class FavoritesViewController: UIViewController {
 }
 
 extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return favoriteStocks.count
     }
@@ -71,7 +71,7 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 88
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "StocksTableViewCell", for: indexPath) as! StocksTableViewCell
         if let favoriteItem = favoriteStocks[indexPath.row] as? NSManagedObject {
@@ -94,5 +94,23 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let favoriteItem = favoriteStocks[indexPath.row] as? NSManagedObject {
+            let name = favoriteItem.value(forKey: "name") as? String ?? ""
+            let symbol = favoriteItem.value(forKey: "symbol") as? String ?? ""
+            let imageUrl = favoriteItem.value(forKey: "imageUrl") as? String ?? ""
+            let price = favoriteItem.value(forKey: "price") as? String ?? ""
+            let priceChange = favoriteItem.value(forKey: "priceChange") as? String ?? ""
+            let symbolId = favoriteItem.value(forKey: "symbolId") as? String ?? ""
+            
+            let data = StocksDataModel(symbol: symbol, name: name, symbolId: symbolId, imageUrl: imageUrl, price: price, priceChange: priceChange, changePercentage: "")
+            
+            let vc = StocksDetailsViewController()
+            vc.symbol = data.symbol
+            vc.price = data.price
+            vc.change = data.priceChange + "(\(data.changePercentage))"
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 }
-

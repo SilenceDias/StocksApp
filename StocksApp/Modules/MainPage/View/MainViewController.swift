@@ -8,6 +8,7 @@
 import UIKit
 import CoreData
 import SnapKit
+import SkeletonView
 
 class MainViewController: UIViewController {
     
@@ -28,6 +29,7 @@ class MainViewController: UIViewController {
         )
         tableView.register(SectionHeader.self, forHeaderFooterViewReuseIdentifier: "header")
         tableView.backgroundColor = .clear
+        tableView.isSkeletonable = true
         return tableView
     }()
     
@@ -35,12 +37,10 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         setupViewModel()
-        loadFavorites()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        tabBarController?.tabBar.isHidden = false
         setupViewModelFavorites()
     }
     
@@ -55,7 +55,7 @@ class MainViewController: UIViewController {
         view.addSubview(recommendedTableView)
         view.backgroundColor = .white
         navigationController?.navigationBar.prefersLargeTitles = true
-        title = "Stocks"
+        navigationItem.title = "Stocks"
         
         recommendedTableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(8)
@@ -65,9 +65,11 @@ class MainViewController: UIViewController {
     
     private func setupViewModel() {
         viewModel = MainViewModel()
+        recommendedTableView.showAnimatedGradientSkeleton()
         DispatchQueue.main.async { [weak self] in
             self?.viewModel?.loadData(comletion: {
                 self?.recommendedTableView.reloadData()
+                self?.recommendedTableView.hideSkeleton()
             })
         }
     }
@@ -138,5 +140,19 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         vc.price = data.price
         vc.change = data.priceChange + "(\(data.changePercentage))"
         navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension MainViewController: SkeletonTableViewDelegate, SkeletonTableViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "StocksTableViewCell"
+    }
+    
+    func numSections(in collectionSkeletonView: UITableView) -> Int {
+        return 3
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 15
     }
 }

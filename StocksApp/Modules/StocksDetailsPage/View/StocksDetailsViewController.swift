@@ -8,7 +8,7 @@
 import UIKit
 import DGCharts
 
-class StocksDetailsViewController: UIViewController {
+class StocksDetailsViewController: BaseViewController {
     
     var symbol = String()
     var price = String()
@@ -143,7 +143,7 @@ class StocksDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = symbol
-        tabBarController?.tabBar.isHidden = true
+        tabBarController?.hidesBottomBarWhenPushed = true
         navigationController?.navigationBar.prefersLargeTitles = false
         buildChart()
         setupViews()
@@ -155,7 +155,6 @@ class StocksDetailsViewController: UIViewController {
         var counter = 1
         
         chart.delegate = self
-        
         viewModel?.loadData(symbol: symbol, completion: { [weak self] prices in
             prices.forEach {
                 lineChartEntries.append(.init(x: Double(counter), y: $0.prices, data: $0.data))
@@ -241,8 +240,6 @@ class StocksDetailsViewController: UIViewController {
             counter += 1
         })
         
-        print(prices)
-        
         let color = UIColor(red: 26/255.0, green: 26/255.0, blue: 26/255.0, alpha: 1.0)
         let dataSet = ChartDatasetFactory.init().makeChartDataset(colorAsset: color, entries: lineChartEntries)
         let data = LineChartData(dataSet: dataSet)
@@ -269,7 +266,6 @@ class StocksDetailsViewController: UIViewController {
             counter += 1
         })
         
-        print(prices)
         
         let color = UIColor(red: 26/255.0, green: 26/255.0, blue: 26/255.0, alpha: 1.0)
         let dataSet = ChartDatasetFactory.init().makeChartDataset(colorAsset: color, entries: lineChartEntries)
@@ -297,7 +293,6 @@ class StocksDetailsViewController: UIViewController {
             counter += 1
         })
         
-        print(prices)
         
         let color = UIColor(red: 26/255.0, green: 26/255.0, blue: 26/255.0, alpha: 1.0)
         let dataSet = ChartDatasetFactory.init().makeChartDataset(colorAsset: color, entries: lineChartEntries)
@@ -325,7 +320,6 @@ class StocksDetailsViewController: UIViewController {
             counter += 1
         })
         
-        print(prices)
         
         let color = UIColor(red: 26/255.0, green: 26/255.0, blue: 26/255.0, alpha: 1.0)
         let dataSet = ChartDatasetFactory.init().makeChartDataset(colorAsset: color, entries: lineChartEntries)
@@ -353,8 +347,6 @@ class StocksDetailsViewController: UIViewController {
             counter += 1
         })
         
-        print(prices)
-        
         let color = UIColor(red: 26/255.0, green: 26/255.0, blue: 26/255.0, alpha: 1.0)
         let dataSet = ChartDatasetFactory.init().makeChartDataset(colorAsset: color, entries: lineChartEntries)
         let data = LineChartData(dataSet: dataSet)
@@ -365,10 +357,30 @@ class StocksDetailsViewController: UIViewController {
 extension StocksDetailsViewController: ChartViewDelegate {
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
         bubleView.isHidden = false
-        bubleView.center.x = highlight.xPx
-        bubleView.center.y = highlight.yPx + 200
+               
+        // Extract the data for the bubble view
         let dataOfBubble = entry.data as! String
-        let price = "String(highlight.y)"
+        let price = String(entry.y)
+               
+        // Configure the bubble view with the extracted data
         bubleView.configure(price: price, date: dataOfBubble)
+               
+        // Update bubble view constraints based on highlight position
+        let bubbleWidth: CGFloat = 99 // Adjust this value as needed
+        let bubbleHeight: CGFloat = 64 // Adjust this value as needed
+        let xOffset: CGFloat = 8 // Offset from highlight position
+        let yOffset: CGFloat = 16 // Offset from highlight position
+            
+        bubleView.snp.remakeConstraints { make in
+            make.width.equalTo(bubbleWidth)
+            make.height.equalTo(bubbleHeight)
+            make.centerX.equalToSuperview().offset(highlight.xPx - xOffset)
+            make.centerY.equalToSuperview().offset(highlight.yPx - 200)
+        }
+               
+        // Update layout
+        self.view.layoutIfNeeded()
     }
+    
+    
 }

@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Kingfisher
+import SkeletonView
 
 class StocksTableViewCell: UITableViewCell {
     var didTapFavorite: (() -> Void)?
@@ -24,6 +25,7 @@ class StocksTableViewCell: UITableViewCell {
         image.contentMode = .scaleAspectFit
         image.layer.cornerRadius = 12
         image.layer.masksToBounds = true
+        image.isSkeletonable = true
         return image
     }()
     
@@ -31,6 +33,7 @@ class StocksTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .black
+        label.isSkeletonable = true
         return label
     }()
     
@@ -38,6 +41,7 @@ class StocksTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .black
+        label.isSkeletonable = true
         return label
     }()
     
@@ -45,6 +49,7 @@ class StocksTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = .black
+        label.isSkeletonable = true
         return label
     }()
     
@@ -52,6 +57,7 @@ class StocksTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .systemGreen
+        label.isSkeletonable = true
         return label
     }()
 
@@ -67,6 +73,10 @@ class StocksTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         favoriteIconImageView.image = nil
+        if logoImage.sk.isSkeletonActive {
+            contentView.isSkeletonable = false
+            contentView.hideSkeleton()
+        }
     }
     
     override func layoutSubviews() {
@@ -85,7 +95,8 @@ class StocksTableViewCell: UITableViewCell {
             self.priceChangeLabel.text = "$\(data.priceChange)(\(data.changePercentage))"
         }
         else {
-            self.priceChangeLabel.text = "+$\(data.priceChange)(\(data.changePercentage))"
+            priceChangeLabel.textColor = .systemGreen
+            self.priceChangeLabel.text = "$\(data.priceChange)(\(data.changePercentage))"
         }
         let url = URL(string: data.imageUrl)
         logoImage.kf.setImage(with: url)
@@ -102,6 +113,8 @@ class StocksTableViewCell: UITableViewCell {
     }
     
     private func setupViews(){
+        isSkeletonable = true
+        contentView.isSkeletonable = true
         contentView.layer.cornerRadius = 16
         contentView.backgroundColor = UIColor(red: 240/255.0, green: 244/255.0, blue: 247/255.0, alpha: 1.0)
         
@@ -150,10 +163,16 @@ class StocksTableViewCell: UITableViewCell {
         favoriteIconImageView.isUserInteractionEnabled = true
     }
     
+    func hideSkeleton(){
+        logoImage.hideSkeleton()
+        [symbolLabel, descriptionLabel, priceLabel, priceChangeLabel].forEach {
+            $0.hideSkeleton()
+        }
+    }
+    
     @objc
     private func didTapFavoriteImage() {
         didTapFavorite?()
         favoriteIconImageView.image = UIImage(named: "full_star")
-        print("tap")
     }
 }

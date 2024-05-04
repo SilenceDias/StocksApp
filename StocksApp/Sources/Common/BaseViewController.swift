@@ -10,71 +10,38 @@ import CoreData
 
 class BaseViewController: UIViewController {
     
-    var favoriteStocks: [NSManagedObject] = []
+    private let loadingView: LoadingView = {
+        let view = LoadingView()
+        view.layer.zPosition = 10
+        view.backgroundColor = .black.withAlphaComponent(0.3)
+        view.alpha = 0
+        view.frame = view.bounds
+        view.autoresizingMask = [.flexibleHeight, .flexibleHeight]
+        return view
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViews()
     }
     
-    func loadFavorites() {
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Favorites")
-        
-        do {
-            favoriteStocks = try context.fetch(fetchRequest)
-        } catch let error as NSError {
-            print("Could not fetch. Error: \(error)")
+    private func setupViews(){
+        view.addSubview(loadingView)
+        loadingView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
-
-    func saveFavoriteStock(with stock: StocksDataModel) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let context = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Favorites")
-        fetchRequest.predicate = NSPredicate(format: "symbolId == %@", stock.symbolId)
-        
-        do {
-            let result = try context.fetch(fetchRequest)
-            if result.isEmpty {
-                guard let entity = NSEntityDescription.entity(
-                    forEntityName: "Favorites",
-                    in: context
-                ) else { return }
-                
-                let favoriteStock = NSManagedObject(entity: entity, insertInto: context)
-                favoriteStock.setValue(stock.symbol, forKey: "symbol")
-                favoriteStock.setValue(stock.symbolId, forKey: "symbolId")
-                favoriteStock.setValue(stock.name, forKey: "name")
-                favoriteStock.setValue(stock.imageUrl, forKey: "imageUrl")
-                favoriteStock.setValue(stock.price, forKey: "price")
-                favoriteStock.setValue(stock.priceChange, forKey: "priceChange")
-                
-                try context.save()
-                favoriteStocks.append(favoriteStock)
-            }
-        } catch let error as NSError {
-            print("Could not save. Error: \(error)")
+    
+    func showLoader(){
+        DispatchQueue.main.async { [weak self] in
+            self?.loadingView.startLoading()
         }
     }
-
-    func deleteFavoriteStock(with stock: StocksDataModel) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let context = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Favorites")
-        fetchRequest.predicate = NSPredicate(format: "symbolId == %@", stock.symbolId)
-        
-        do {
-            let results = try context.fetch(fetchRequest)
-            if let data = results.first {
-                context.delete(data)
-                try context.save()
-                if let index = favoriteStocks.firstIndex(of: data) {
-                    favoriteStocks.remove(at: index)
-                }
-            }
-        } catch let error as NSError {
-            print("Could not delete. Error: \(error)")
+    
+    func hideLoader(){
+        DispatchQueue.main.async { [weak self] in
+            self?.loadingView.stopLoading()
         }
     }
+    
 }
