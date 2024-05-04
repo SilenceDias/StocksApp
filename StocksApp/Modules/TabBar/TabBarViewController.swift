@@ -16,9 +16,9 @@ class TabBarViewController: UITabBarController {
     ]
     
     private var allViewControllers = [
-        UINavigationController(rootViewController: SearchViewController()),
+        UINavigationController(rootViewController: MainViewController()),
         UINavigationController(rootViewController: FavoritesViewController()),
-        UINavigationController(rootViewController: MainViewController())
+        UINavigationController(rootViewController: SearchViewController())
     ]
 
     override func viewDidLoad() {

@@ -35,6 +35,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         setupViewModel()
+        loadFavorites()
     }
     
     override func viewDidAppear(_ animated: Bool) {
