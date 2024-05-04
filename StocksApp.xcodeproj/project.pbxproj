@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C92AD5902BDD28940063F5D4 /* StockSearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92AD58F2BDD28940063F5D4 /* StockSearchManager.swift */; };
 		C92AD5942BDD2B0C0063F5D4 /* APIResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92AD5932BDD2B0C0063F5D4 /* APIResult.swift */; };
 		C92AD5972BDD354A0063F5D4 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92AD5962BDD354A0063F5D4 /* SearchResultsViewController.swift */; };
 		C92AD5992BDD3B730063F5D4 /* StockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92AD5982BDD3B730063F5D4 /* StockData.swift */; };
@@ -59,7 +58,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C92AD58F2BDD28940063F5D4 /* StockSearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StockSearchManager.swift; path = StocksApp/Core/Managers/NetworkManager/StockSearchManager.swift; sourceTree = SOURCE_ROOT; };
 		C92AD5932BDD2B0C0063F5D4 /* APIResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResult.swift; sourceTree = "<group>"; };
 		C92AD5962BDD354A0063F5D4 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		C92AD5982BDD3B730063F5D4 /* StockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockData.swift; sourceTree = "<group>"; };
@@ -123,14 +121,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C92AD5912BDD2AD20063F5D4 /* NetworkManager */ = {
-			isa = PBXGroup;
-			children = (
-				C92AD58F2BDD28940063F5D4 /* StockSearchManager.swift */,
-			);
-			path = NetworkManager;
-			sourceTree = "<group>";
-		};
 		C92AD5922BDD2AED0063F5D4 /* APIResult */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,7 +357,6 @@
 				E82067402BDFF58E003B1289 /* FMPManager.swift */,
 				C94A3CED2BE03F7F00072DCD /* FMPSearchManager.swift */,
 				C92AD5922BDD2AED0063F5D4 /* APIResult */,
-				C92AD5912BDD2AD20063F5D4 /* NetworkManager */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -526,7 +515,6 @@
 				E82067252BDBF950003B1289 /* StockModel.swift in Sources */,
 				E820675B2BE50421003B1289 /* Bubble.swift in Sources */,
 				E82067592BE438C8003B1289 /* DetailsViewModel.swift in Sources */,
-				E820671E2BDBF692003B1289 /* StockTarget.swift in Sources */,
 				E820672C2BDBFB5B003B1289 /* StocksDataModel.swift in Sources */,
 				E8AD91BD2BDBE88300A8FBD6 /* SearchViewController.swift in Sources */,
 				E8AD91B32BDBE6CF00A8FBD6 /* BaseTarget.swift in Sources */,
@@ -546,7 +534,6 @@
 				E820673D2BDFF3D1003B1289 /* CompanyFMPModel.swift in Sources */,
 				C92AD59C2BDD4D2A0063F5D4 /* SearchViewModel.swift in Sources */,
 				C92AD5942BDD2B0C0063F5D4 /* APIResult.swift in Sources */,
-				C92AD5902BDD28940063F5D4 /* StockSearchManager.swift in Sources */,
 				E8AD91B92BDBE7B600A8FBD6 /* TabBarViewController.swift in Sources */,
 				C92AD5972BDD354A0063F5D4 /* SearchResultsViewController.swift in Sources */,
 				E82067522BE0314B003B1289 /* CircleMarker.swift in Sources */,
@@ -780,20 +767,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E82067452BE02C4A003B1289 /* XCRemoteSwiftPackageReference "Charts" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/danielgindi/Charts.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.1.0;
-			};
-		};
 		C94A3CF22BE416B500072DCD /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Juanpe/SkeletonView";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.31.0;
+			};
+		};
+		E82067452BE02C4A003B1289 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
 			};
 		};
 		E8AD91A52BDBE64B00A8FBD6 /* XCRemoteSwiftPackageReference "Moya" */ = {

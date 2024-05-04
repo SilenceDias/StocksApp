@@ -7,12 +7,12 @@
 
 import UIKit
 import CoreData
+import SnapKit
 
 class MainViewController: UIViewController {
     
     var viewModel: MainViewModel?
-    
-    private lazy var favoriteStocks:[NSManagedObject] = []
+    private var favoriteStocks: [NSManagedObject] = []
     
     private lazy var recommendedTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -29,7 +29,7 @@ class MainViewController: UIViewController {
         tableView.backgroundColor = .clear
         return tableView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -37,63 +37,70 @@ class MainViewController: UIViewController {
         loadFavorites()
     }
     
-    private func loadFavorites() {
+    func loadFavorites() {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Favorites")
         
         do {
-            
             favoriteStocks = try context.fetch(fetchRequest)
-        } catch  let error as NSError{
-            
+        } catch let error as NSError {
             print("Could not fetch. Error: \(error)")
         }
     }
+
+    private func saveFavoriteStock(with stock: StocksDataModel) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Favorites")
+        fetchRequest.predicate = NSPredicate(format: "symbolId == %@", stock.symbolId)
+        
+        do {
+            let result = try context.fetch(fetchRequest)
+            if result.isEmpty {
+                guard let entity = NSEntityDescription.entity(
+                    forEntityName: "Favorites",
+                    in: context
+                ) else { return }
+                
+                let favoriteStock = NSManagedObject(entity: entity, insertInto: context)
+                favoriteStock.setValue(stock.symbol, forKey: "symbol")
+                favoriteStock.setValue(stock.symbolId, forKey: "symbolId")
+                favoriteStock.setValue(stock.name, forKey: "name")
+                favoriteStock.setValue(stock.imageUrl, forKey: "imageUrl")
+                favoriteStock.setValue(stock.price, forKey: "price")
+                favoriteStock.setValue(stock.priceChange, forKey: "priceChange")
+                
+                try context.save()
+                favoriteStocks.append(favoriteStock)
+            }
+        } catch let error as NSError {
+            print("Could not save. Error: \(error)")
+        }
+    }
+
+    private func deleteFavoriteStock(with stock: StocksDataModel) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Favorites")
+        fetchRequest.predicate = NSPredicate(format: "symbolId == %@", stock.symbolId)
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            if let data = results.first {
+                context.delete(data)
+                try context.save()
+                if let index = favoriteStocks.firstIndex(of: data) {
+                    favoriteStocks.remove(at: index)
+                }
+            }
+        } catch let error as NSError {
+            print("Could not delete. Error: \(error)")
+        }
+    }
+
     
-//    private func saveFavoriteMovie(with movie: Result) {
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//        
-//        guard let entity = NSEntityDescription.entity(
-//            forEntityName: "FavoriteMovies",
-//            in: managedContext
-//        ) else { return }
-//        
-//        let favoriteMovie = NSManagedObject(entity: entity, insertInto: managedContext)
-//        favoriteMovie.setValue(movie.id, forKey: "id")
-//        favoriteMovie.setValue(movie.title, forKey: "title")
-//        favoriteMovie.setValue(movie.posterPath, forKey: "posterPath")
-//        
-//        do {
-//            try managedContext.save()
-//        } catch let error as NSError {
-//            print("Could not save. Error: \(error)")
-//        }
-//    }
-//    
-//    private func deleteFavoriteMovie(with movie: Result) {
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "FavoriteMovies")
-//        let predicate1 = NSPredicate(format: "id == %@", "\(movie.id)")
-//        let predicate2 = NSPredicate(format: "title == %@", movie.title)
-//        let predicate3 = NSPredicate(format: "posterPath == %@", movie.posterPath)
-//        let predicateAll = NSCompoundPredicate(type: .and, subpredicates: [predicate1, predicate2, predicate3])
-//        fetchRequest.predicate = predicateAll
-//        
-//        do {
-//            let results = try managedContext.fetch(fetchRequest)
-//            let data = results.first
-//            if let data {
-//                managedContext.delete(data)
-//            }
-//            try managedContext.save()
-//        } catch let error as NSError {
-//            print("Could not delete. Error: \(error)")
-//        }
-//    }
-    
-    private func setupViews(){
+    private func setupViews() {
         view.addSubview(recommendedTableView)
         view.backgroundColor = .white
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -105,14 +112,13 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func setupViewModel(){
+    private func setupViewModel() {
         viewModel = MainViewModel()
         DispatchQueue.main.async { [weak self] in
             self?.viewModel?.loadData(comletion: {
                 self?.recommendedTableView.reloadData()
             })
         }
-        
     }
 }
 
@@ -145,25 +151,25 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = recommendedTableView.dequeueReusableCell(withIdentifier: "StocksTableViewCell", for: indexPath) as! StocksTableViewCell
-        let data = viewModel?.getCellViewModel(at: indexPath)
+        guard let data = viewModel?.getCellViewModel(at: indexPath) else {
+            return UITableViewCell()
+        }
         cell.configure(data: data)
-//        
-//        let isFavoriteMovie = !self.favoriteMovies.filter({ ($0.value(forKeyPath: "id") as? Int) == movie.id}).isEmpty
-//        cell.toggleFavoriteImage(with: isFavoriteMovie)
         
-//        cell.didTapFavorite = { [weak self] in
-//            guard let self else { return }
-//            let isFavoriteMovie = !self.favoriteMovies.filter({ ($0.value(forKeyPath: "id") as? Int) == movie.id}).isEmpty
-//            cell.toggleFavoriteImage(with: isFavoriteMovie)
-//            
-//            if isFavoriteMovie {
-//                self.deleteFavoriteMovie(with: movie)
-//            } else {
-//                self.saveFavoriteMovie(with: movie)
-//            }
-//            
-//            self.movieTableView.reloadData()
-//        }
+        let isFavoriteStock = favoriteStocks.contains { ($0.value(forKeyPath: "symbolId") as? String) == data.symbolId }
+
+        cell.toggleFavoriteImage(with: isFavoriteStock)
+        
+        cell.didTapFavorite = { [weak self] in
+            guard let self = self else { return }
+            
+            if isFavoriteStock {
+                self.deleteFavoriteStock(with: data)
+            } else {
+                self.saveFavoriteStock(with: data)
+            }
+            self.recommendedTableView.reloadData()
+        }
         
         return cell
     }
