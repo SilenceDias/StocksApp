@@ -17,7 +17,7 @@ class TabBarViewController: UITabBarController {
     
     private var allViewControllers = [
         UINavigationController(rootViewController: MainViewController()),
-        UINavigationController(rootViewController: StocksDetailsViewController()),
+        UINavigationController(rootViewController: FavoritesViewController()),
         UINavigationController(rootViewController: SearchViewController())
     ]
 

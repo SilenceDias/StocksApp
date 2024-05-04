@@ -45,8 +45,6 @@ class SearchViewModel {
         }
     }
     
-
-    
     func getCellViewModel(at indexPath: IndexPath) -> StocksDataModel {
         return searchResults[0].stocks[indexPath.row]
     }

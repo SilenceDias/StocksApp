@@ -11,6 +11,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     var viewModel: SearchViewModel?
     
+    private var notFoundImageView: UIImageView = {
+        let image = UIImageView()
+        image.contentMode = .scaleAspectFit
+        image.image = UIImage(named: "not_found")
+        return image
+    }()
+    
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: SearchResultsViewController())
         searchController.searchBar.placeholder = "Search"
@@ -50,6 +57,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         navigationItem.searchController = searchController
         definesPresentationContext = true
         view.addSubview(tableView)
+        view.addSubview(notFoundImageView)
+        
+        notFoundImageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
     }
     
     private func setupViewModel(){
