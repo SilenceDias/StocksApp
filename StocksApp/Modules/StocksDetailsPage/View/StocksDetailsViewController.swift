@@ -374,7 +374,7 @@ extension StocksDetailsViewController: ChartViewDelegate {
         bubleView.snp.remakeConstraints { make in
             make.width.equalTo(bubbleWidth)
             make.height.equalTo(bubbleHeight)
-            make.centerX.equalToSuperview().offset(highlight.xPx - xOffset)
+            make.centerX.equalToSuperview().offset(highlight.xPx - 200)
             make.centerY.equalToSuperview().offset(highlight.yPx - 200)
         }
                

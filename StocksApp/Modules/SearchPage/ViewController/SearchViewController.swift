@@ -52,6 +52,7 @@ class SearchViewController: BaseViewController, UISearchBarDelegate {
         navigationItem.title = "Search"
         setupViews()
         setupViewModel()
+        self.searchController.obscuresBackgroundDuringPresentation = false
     }
     
     private func setupViews(){
@@ -82,6 +83,8 @@ extension SearchViewController: UISearchResultsUpdating {
         else {
             return
         }
+        
+        resultsViewController.delegate = self
         showLoader()
         viewModel?.search(query: text, completion: { [weak self] stocks in
             resultsViewController.update(with: stocks)
@@ -91,7 +94,17 @@ extension SearchViewController: UISearchResultsUpdating {
 }
 
 
-extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+extension SearchViewController: UITableViewDelegate, UITableViewDataSource, SearchTableDelegate {
+    func passSelectedValue(selected stock: StocksDataModel) {
+        let vc = StocksDetailsViewController()
+        let data = stock
+        vc.symbol = data.symbol
+        vc.price = data.price
+        vc.change = (data.priceChange) + "(\(String(describing: data.changePercentage)))"
+        vc.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (viewModel?.getNumberOfItems())!
     }
@@ -111,8 +124,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         let vc = StocksDetailsViewController()
         let data = viewModel?.getCellViewModel(at: indexPath)
         vc.symbol = data?.symbol ?? ""
-        vc.price = data?.symbol ?? ""
+        vc.price = data?.price ?? ""
         vc.change = (data?.priceChange ?? "") + "(\(String(describing: data?.changePercentage)))"
+        vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }
 }

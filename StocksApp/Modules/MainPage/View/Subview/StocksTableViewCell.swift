@@ -114,6 +114,7 @@ class StocksTableViewCell: UITableViewCell {
     
     private func setupViews(){
         isSkeletonable = true
+        selectionStyle = .none
         contentView.isSkeletonable = true
         contentView.layer.cornerRadius = 16
         contentView.backgroundColor = UIColor(red: 240/255.0, green: 244/255.0, blue: 247/255.0, alpha: 1.0)

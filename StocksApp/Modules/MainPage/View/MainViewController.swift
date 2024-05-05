@@ -139,6 +139,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         vc.symbol = data.symbol
         vc.price = data.price
         vc.change = data.priceChange + "(\(data.changePercentage))"
+        vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }
 }

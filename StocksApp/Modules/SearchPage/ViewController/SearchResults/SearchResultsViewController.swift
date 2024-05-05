@@ -9,10 +9,15 @@ import UIKit
 import CoreData
 import SkeletonView
 
+protocol SearchTableDelegate {
+    func passSelectedValue(selected stock: StocksDataModel)
+}
+
 class SearchResultsViewController: UIViewController {
     private var searchResults: [StocksDataModel] = []
     private var favoriteStocks: [NSManagedObject] = []
     var favoritesViewModel: FavoritesViewModel?
+    var delegate: SearchTableDelegate!
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -111,12 +116,8 @@ extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSourc
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = StocksDetailsViewController()
-        let data = searchResults[indexPath.row]
-        vc.symbol = data.symbol
-        vc.price = data.price
-        vc.change = data.priceChange + "(\(data.changePercentage))"
-        navigationController?.pushViewController(vc, animated: true)
+        let selectedValue = searchResults[indexPath.row]
+        delegate.passSelectedValue(selected: selectedValue)
     }
 }
 
